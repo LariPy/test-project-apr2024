@@ -1,7 +1,14 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const { logger } = require('./middleware/logger')
 const PORT = process.env.PORT || 3500
+
+// Logger
+app.use(logger)
+
+// Parse JSON
+app.use(express.json())
 
 // Resources
 app.use('/', express.static(path.join(__dirname, '/public')))
@@ -22,3 +29,21 @@ app.all('*', (req, res) => {
 })
 
 app.listen(PORT, ()=> console.log(`Server running on ${PORT}`))
+
+/*
+
+Logger
+
+Parse JSON
+Gives the server the ability to parse JSON
+
+Resources
+Points whre to find resources such as .css
+
+Routing
+
+404
+Catches anything that Routing doesn't catch
+In which case 404 page is shown
+
+*/
